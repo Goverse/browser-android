@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.goverse.browser">
+
+    <application>
+
+        <activity android:name="com.goverse.browser.process.BrowserActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:process=":browser">
+            <intent-filter>
+                <action android:name="com.goverse.browser.activity"></action>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.goverse.browser.process.BrowserService"
+                 android:process=":browser">
+            <intent-filter>
+                <action android:name="com.goverse.browser.service"></action>
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>

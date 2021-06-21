@@ -1,0 +1,4 @@
+include ':app',
+        ':lib_browser:browser_core',
+        ':lib_browser:browser_process'
+rootProject.name = "BrowserProject"
