@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- webview -->
-    <string name="lib_browser_webview_network_not_connected">No Network</string>
-    <string name="lib_browser_webview_refresh">Refresh</string>
-    <string name="lib_browser_network_loading">Loading...</string>
-    <string name="lib_browser_webview_network_connect_failed">Network error. Check your network settings.</string>
-    <string name="lib_browser_webview_generic_error">Loading failed. Please try again.</string>
-    <string name="lib_browser_webview_time_out">Connection timed out. Please try again.</string>
-    <string name="lib_browser_webview_bad_url">重提</string>
+    <string name="lib_browser_webview_network_not_connected">无网络</string>
+    <string name="lib_browser_webview_refresh">刷新</string>
+    <string name="lib_browser_network_loading">加载中...</string>
+    <string name="lib_browser_webview_network_connect_failed">网络错误, 请检查网络设置.</string>
+    <string name="lib_browser_webview_generic_error">加载失败，请重试.</string>
+    <string name="lib_browser_webview_time_out">连接超时，请重试.</string>
+    <string name="lib_browser_webview_bad_url">地址错误</string>
 </resources>

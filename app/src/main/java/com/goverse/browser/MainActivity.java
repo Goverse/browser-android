@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import com.goverse.browser.R;
 import com.goverse.browser.js.JsResult;
 import com.goverse.browser.main.BrowserMainActivity;
@@ -22,14 +25,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_main).setOnClickListener(v -> { startActivity(new Intent(this, BrowserMainActivity.class)); });
-        findViewById(R.id.btn_process).setOnClickListener(v -> { startSubProcessBrowser(); });
+
+        RadioGroup rgTheme = findViewById(R.id.rg_theme);
+        RadioGroup rgProcess = findViewById(R.id.rg_process);
+        EditText etUrl = findViewById(R.id.et_url);
+        Button btnEnter = findViewById(R.id.btn_enter);
+
+        btnEnter.setOnClickListener(v -> {
+            int theme = Browser.Theme.NORMAL;
+            int checkedThemeId = rgTheme.getCheckedRadioButtonId();
+            int checkedProcessId = rgProcess.getCheckedRadioButtonId();
+            if (checkedThemeId == R.id.rb_full) theme = Browser.Theme.FULL_SCREEN;
+            if (checkedThemeId == R.id.rb_screen) theme = Browser.Theme.SCREEN;
+            openBrowser(etUrl.getText().toString(), theme, checkedProcessId == R.id.rb_main ? true: false);
+        });
     }
 
-    private void startSubProcessBrowser() {
+    private void openBrowser(String url, int theme, boolean isMainProcess) {
+
+        if (isMainProcess) {
+            Intent intent = new Intent(this, BrowserMainActivity.class);
+            intent.putExtra("url", url);
+            intent.putExtra("theme", theme);
+            startActivity(intent);
+        } else {
+            startSubProcessBrowser(url, new BrowserSetting.Builder().theme(theme).build());
+        }
+    }
+
+
+    private void startSubProcessBrowser(String url, BrowserSetting browserSetting) {
         BrowserInitializer.initSubProcess(getApplicationContext());
         try {
-            BpBrowser.getInstance().startBrowser("https://www.baidu.com", BrowserSetting.FULLSCREEN, new BrowserJsFunction(getApplicationContext()), new BrowserPageInterceptListener(getApplicationContext()));
+            BpBrowser.getInstance().startBrowser(url, browserSetting, new BrowserJsFunction(getApplicationContext()), new BrowserPageInterceptListener(getApplicationContext()));
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

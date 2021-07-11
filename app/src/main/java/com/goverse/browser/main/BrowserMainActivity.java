@@ -11,17 +11,22 @@ import com.goverse.browser.js.JsResult;
 
 public class BrowserMainActivity extends BaseBrowserActivity {
 
+    private String url;
+    private int theme;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreateContentView(Bundle savedInstanceState) {
+        super.onCreateContentView(savedInstanceState);
         BrowserInitializer.initMain(getApplicationContext());
+        url = getIntent().getStringExtra("url");
+        theme = getIntent().getIntExtra("theme", Browser.Theme.NORMAL);
     }
 
     @Override
     public Browser onCreateBrowser(BrowserView browserView) {
         return Browser.with(this)
                 .setView(browserView)
-                .theme(Browser.Theme.FULL_SCREEN)
+                .theme(theme)
                 .supportDarkMode(true)
                 .enableJavaScript(true)
                 .adoptScreen(true)
@@ -36,7 +41,7 @@ public class BrowserMainActivity extends BaseBrowserActivity {
 
     @Override
     public String url() {
-        return "https://www.baidu.com";
+        return url;
     }
 
 }
